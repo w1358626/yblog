@@ -1,0 +1,98 @@
+
+ <!DOCTYPE html>
+ <html ng-app="myApp" xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+         <link href="bower_components/angular-bootstrap/ui-bootstrap-csp.css" rel="stylesheet" />
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+        <script>
+
+            var app=angular.module('myApp', ['ui.bootstrap']).controller('AccordionDemoCtrl', function ($scope) {
+                $scope.expanders = [{
+                    title : 'Click me to expand',
+                    texts :['Hi there folks, I am the content that was hidden but is now shown.', 'Hi there folks, I am the content that was hidden but is now shown.', 'Hi there folks, I am the content that was hidden but is now shown.']
+                }, {
+                    title : 'Click this',
+                    texts :[ 'I am even better text than you have seen previously', 'I am even better text than you have seen previously', 'I am even better text than you have seen previously']
+                }, {
+                    title : 'Test',
+                    texts : ['test','test','test']
+                }];
+               });
+            app.directive('expander', function(){
+                return {
+                    restrict : 'EA',
+                    replace : true,
+                    transclude : true,
+                    require : '^?accordion',
+                    scope : {
+                        expanderTitle : '='
+                    },
+                    template : '<div>'
+                    + '<div class="ex-title" ng-click="toggle()">{{expanderTitle}}</div>'
+                    + '<div class="ex-body" ng-show="showMe" ng-transclude></div>'
+                    + '</div>',
+                    link : function(scope, iElement, iAttrs, accordionController) {
+                        scope.showMe = false;
+                        accordionController.addExpander(scope);
+                        scope.toggle = function toggle() {
+                            scope.showMe = !scope.showMe;
+                            accordionController.gotOpened(scope);
+                        };
+                    }
+                };
+            });
+            app.directive('accordion',function(){
+                return {
+                    restrict : 'EA',
+                    replace : true,
+                    transclude : true,
+                    template : '<div ng-transclude></div>',
+                    controller : function() {
+                        var expanders = [];
+                        this.gotOpened = function(selectedExpander) {
+                            angular.forEach(expanders, function(expander) {
+                                if (selectedExpander != expander) {
+                                    expander.showMe = false;
+                                }
+                            });
+                        };
+                        this.addExpander = function(expander) {
+                            expanders.push(expander);
+                        };
+                    }
+                };
+            });
+
+        </script>
+
+     </head>
+ <body style="padding:10px;">
+     <div ng-controller="AccordionDemoCtrl">
+            <script type="text/ng-template" id="group-template.html">
+                <div class="panel {{panelClass || 'panel-default'}}">
+                         <div class="panel-heading">
+                             <h4 class="panel-title" style="color:#fa39c3">
+                                 <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+                                    <span ng-class="{'text-muted': isDisabled}">{{heading}}</span>
+                                 </a>
+                             </h4>
+                        </div>
+                         <div class="panel-collapse collapse" uib-collapse="!isOpen">
+                             <div class="panel-body" style="text-align: right" ng-transclude></div>
+                        </div>
+                     </div>
+            </script>
+
+         <accordion>
+             <expander class='expander' ng-repeat='expander in expanders' expander-title='expander.title'>
+                 <p ng-repeat="expander.texts"></p>
+             </expander>
+         </accordion>
+         </div>
+
+ </body>
+ </html>

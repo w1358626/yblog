@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+
+  <link rel="stylesheet" href="bower_components/toolbarTip/jquery.toolbar.css">
+  <link rel="stylesheet" href="bower_components/wangEditor-2.1.16/dist/css/wangEditor.min.css"/>
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="bower_components/wangEditor-2.1.16/dist/js/wangEditor.min.js"></script>
+  <script src="bower_components/bootstrap.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+  <script src="bower_components/Chart.js"></script>
+  <script src="bower_components/toolbarTip/jquery.toolbar.js"></script>
+  <script src="../node_modules/es6-promise/dist/es6-promise.auto.min.js"></script>
+  <script src="../node_modules/flv.js/dist/flv.min.js"></script>
+  <script src="app.js"></script>
+</head>
+<body>
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+<div ui-view=""></div>
+
+<!--<form action="http://39.108.14.218:8000/upload.html" enctype="multipart/form-data" method="post">
+  <input type="file"  name="upload" />
+  <input type="submit"/>
+</form>-->
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+
+
+<script src="services/localStorage.js"></script>
+<script src="directives/slider.js"></script>
+  <script src="modules/front_module/home/home.js"></script>
+  <script src="modules/front_module/fashion/fashion.js"></script>
+<script src="modules/front_module/art/art.js"></script>
+<script src="modules/front_module/car/car.js"></script>
+<script src="modules/front_module/culture/culture.js"></script>
+<script src="modules/front_module/current/current.js"></script>
+<script src="modules/front_module/finance/finance.js"></script>
+<script src="modules/front_module/health/health.js"></script>
+<script src="modules/front_module/blog/fDynamic.js"></script>
+<script src="modules/front_module/blog/blog.js"></script>
+  <script src="modules/front_module/blog/myHome.js"></script>
+  <script src="modules/front_module/blog/myInfo.js"></script>
+  <script src="modules/front_module/blog/message.js"></script>
+  <script src="modules/front_module/blog/myPower.js"></script>
+  <script src="modules/front_module/blog/mySet.js"></script>
+  <script src="modules/front_module/blog/set_blog.js"></script>
+  <script src="modules/front_module/blog/upPhoto.js"></script>
+  <script src="modules/front_module/blog/set_password.js"></script>
+  <script src="modules/front_module/blog/set_head.js"></script>
+<script src="modules/front_module/blog/log.js"></script>
+  <script src="modules/front_module/blog/not_login.js"></script>
+  <script src="modules/front_module/blog/not_perm.js"></script>
+<script src="modules/front_module/blog/log_detail.js"></script>
+<script src="modules/front_module/blog/photos.js"></script>
+  <script src="modules/front_module/blog/video.js"></script>
+  <script src="modules/front_module/blog/showInfo.js"></script>
+<script src="modules/front_module/blog/photos_detail.js"></script>
+<script src="modules/front_module/blog/post_article.js"></script>
+<script src="modules/front_module/life/life.js"></script>
+<script src="modules/front_module/science/science.js"></script>
+<script src="modules/front_module/sports/sports.js"></script>
+<script src="modules/front_module/starsBlog/starsBlog.js"></script>
+<script src="modules/front_module/travel/travel.js"></script>
+<script src="modules/front_module/visual/visual.js"></script>
+<script src="modules/front_module/register/register.js"></script>
+  <script src="modules/front_module/register/reg_success.js"></script>
+  <script src="modules/back_module/login.js"></script>
+  <script src="modules/back_module/home.js"></script>
+  <script src="modules/back_module/content.js"></script>
+  <script src="modules/back_module/user_list.js"></script>
+
+<script src="modules/front_module/blog/post_article.js"></script>
+<script src="modules/front_module/entertainment/entertainment.js"></script>
+  <script src="modules/front_module/home/headline.js"></script>
+  <script src="modules/front_module/home/hot.js"></script>
+  <script src="modules/front_module/home/list.js"></script>
+  <script src="modules/front_module/home/visual.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<style type="text/css">
+    /* general tree css */
+
+    treecontrol {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Verdana, Helvetica, Arial, sans-serif;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+    }
+
+    treecontrol ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border: none;
+        overflow: hidden;
+    }
+
+    treecontrol li {
+        position: relative;
+        padding: 0 0 0 20px;
+        line-height: 20px;
+    }
+
+    treecontrol li.tree-expanded i.tree-normal, treecontrol li.tree-collapsed i.tree-normal {display:none;}
+    treecontrol li.tree-expanded i.tree-has-children, treecontrol li.tree-collapsed i.tree-has-children {display:inline;}
+    treecontrol li.tree-normal i.tree-has-children {display:none;}
+    treecontrol li.tree-normal i.tree-normal {display:inline;}
+
+    treecontrol li i {
+        cursor: pointer;
+    }
+
+    treecontrol li .tree-label {
+        cursor: pointer;
+        display: inline;
+    }
+
+    /* classic tree css */
+
+    treecontrol.tree-classic li.tree-expanded i {
+        padding: 1px 10px;
+        background: url("https://raw.github.com/wix/angular.treecontrol/master/images/folder.png") no-repeat;
+    }
+
+    treecontrol.tree-classic li.tree-collapsed i {
+        padding: 1px 10px;
+        background: url("https://raw.github.com/wix/angular.treecontrol/master/images/folder-closed.png") no-repeat;
+    }
+
+    treecontrol.tree-classic li.tree-normal i {
+        padding: 1px 10px;
+        background: url("https://raw.github.com/wix/angular.treecontrol/master/images/file.png") no-repeat;
+    }
+
+    treecontrol.tree-classic li .tree-selected {
+        background-color: #aaddff;
+        font-weight: bold;
+    }
+
+    /* light tree css */
+
+    treecontrol.tree-light li.tree-expanded i {
+        padding: 1px 10px;
+        background: url("https://raw.github.com/wix/angular.treecontrol/master/images/node-opened-2.png") no-repeat;
+    }
+
+    treecontrol.tree-light li.tree-collapsed i {
+        padding: 1px 10px;
+        background: url("https://raw.github.com/wix/angular.treecontrol/master/images/node-closed-2.png") no-repeat;
+    }
+
+    treecontrol.tree-light li.tree-normal i {
+        padding: 1px 10px;
+        width: 16px; height: 16px;
+        background: none no-repeat;
+    }
+
+    treecontrol.tree-light li .tree-selected {
+        font-weight: bold;
+    }
+
+    /* dark tree css */
+
+    treecontrol.tree-dark li.tree-expanded i {
+        padding: 1px 10px;
+        background: url("https://raw.github.com/wix/angular.treecontrol/master/images/node-opened-light.png") no-repeat;
+    }
+
+    treecontrol.tree-dark li.tree-collapsed i {
+        padding: 1px 10px;
+        background: url("https://raw.github.com/wix/angular.treecontrol/master/images/node-closed-light.png") no-repeat;
+    }
+
+    treecontrol.tree-dark li.tree-normal i {
+        padding: 1px 10px;
+        width: 16px; height: 16px;
+        background: none no-repeat;
+    }
+
+    treecontrol.tree-dark li .tree-selected {
+        font-weight: bold;
+    }
+
+    treecontrol.tree-dark {
+        color: #ddd;
+    }
+
+    /* general styles for the demo */
+    h2, h3 {font-family: Georgia; font-style: italic}
+    .tree-border {flex: 1;border: 1px solid #47a; box-shadow: 2px 2px 2px 2px #257; margin: 0 5px; overflow: scroll}
+    .fake-link {color: blue; text-decoration: underline; cursor: pointer;}
+
+</style>
+<script src="jquery-1.9.js" type="text/javascript"></script>
+<script src="angular1.2.js" type="text/javascript"></script>
+<div ng-app="treeControl">
+    <div ng-controller="Controller">
+        <div style="display: flex; flex-direction: row">
+            <div class="tree-border">
+                <h3>Classic Tree</h3>
+                <div>Selected: {{node1.label?node1.label:"N/A"}}</div>
+                <treecontrol class="tree-classic" tree-model="treedata" node-children="children" on-selection="showSelected(node)" selected-node="node1">
+                    label: {{node.label}} ({{node.id}})
+                </treecontrol>
+            </div>
+            <div class="tree-border">
+                <h3>Light Tree</h3>
+                <div>Selected: {{node2.label?node2.label:"N/A"}}</div>
+                <treecontrol class="tree-light" tree-model="treedata" node-children="children" on-selection="showSelected(node)" selected-node="node2">
+                    label: {{node.label}} ({{node.id}})
+                </treecontrol>
+            </div>
+            <div class="tree-border" style=" background: #555;">
+                <h3 style="color: white">Dark Tree</h3>
+                <div style="color: white">Selected: {{node3.label?node2.label:"N/A"}}</div>
+                <treecontrol class="tree-dark" tree-model="treedata" node-children="children" on-selection="showSelected(node)" selected-node="node3">
+                    label: {{node.label}} ({{node.id}})
+                </treecontrol>
+            </div>
+        </div>
+        <h2>Selection</h2>
+        Based on callback (on-selection): {{selected}}</br>
+        Based on binding (selected-node): {{node1.label}}, {{node2.label}}, {{node3.label}}
+        <h2>Mutate the tree</h2>
+        <a class="fake-link" ng-click="addRoot()">add root</a></br>
+        <a class="fake-link" ng-click="addChild()">add child (to the first root of the tree)</a></br>
+        <script>
+
+            function Controller($scope) {
+
+                var num = 1;
+                function getNum() {
+                    return num++;
+                }
+
+                $scope.treedata=createSubTree(7);
+                function createSubTree(level) {
+                    if (level > 0)
+                        return [
+                            { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) },
+                            { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) },
+                            { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) },
+                            { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) }
+                        ];
+                    else
+                        return [];
+                }
+
+                $scope.showSelected = function(sel) {
+                    $scope.selected = sel.label;
+                };
+
+                $scope.addRoot = function() {
+                    $scope.treedata.push({ "label" : "New Node " + getNum(), "id" : "id", "children": [] });
+                };
+                $scope.addChild = function() {
+                    $scope.treedata[0].children.push({ "label" : "New Node " + getNum(), "id" : "id", "children": [] });
+                };
+            }
+
+        </script>
+    </div>
+</div>
+<script>
+    (function ( angular ) {
+        'use strict';
+
+        angular.module( 'treeControl', [] )
+                .directive( 'treecontrol', ['$compile', function( $compile ) {
+                    return {
+                        restrict: 'E',
+                        require: "treecontrol",
+                        transclude: true,
+                        scope: {
+                            treeModel: "=",
+                            selectedNode: "=",
+                            onSelection: "&",
+                            nodeChildren: "@"
+                        },
+                        controller: function( $scope ) {
+
+                            $scope.nodeChildren = $scope.nodeChildren || 'children';
+                            $scope.expandedNodes = {};
+
+                            $scope.headClass = function(node) {
+                                if (node[$scope.nodeChildren].length && !$scope.expandedNodes[this.$id])
+                                    return "tree-collapsed";
+                                else if (node[$scope.nodeChildren].length && $scope.expandedNodes[this.$id])
+                                    return "tree-expanded";
+                                else
+                                    return "tree-normal"
+                            };
+
+                            $scope.nodeExpanded = function() {
+                                return $scope.expandedNodes[this.$id];
+                            };
+
+                            $scope.selectNodeHead = function() {
+                                $scope.expandedNodes[this.$id] = !$scope.expandedNodes[this.$id];
+                            };
+
+                            $scope.selectNodeLabel = function( selectedNode ){
+                                $scope.selectedScope = this.$id;
+                                $scope.selectedNode = selectedNode;
+                                if ($scope.onSelection)
+                                    $scope.onSelection({node: selectedNode});
+                            };
+
+                            $scope.selectedClass = function() {
+                                return (this.$id == $scope.selectedScope)?"tree-selected":"";
+                            };
+
+                            //tree template
+                            var template =
+                                    '<ul>' +
+                                    '<li ng-repeat="node in node.' + $scope.nodeChildren+'" ng-class="headClass(node)">' +
+                                    '<i class="tree-has-children" ng-click="selectNodeHead(node)"></i>' +
+                                    '<i class="tree-normal"></i>' +
+                                    '<div class="tree-label" ng-class="selectedClass()" ng-click="selectNodeLabel(node)" tree-transclude></div>' +
+                                    '<treeitem ng-if="nodeExpanded()"></treeitem>' +
+                                    '</li>' +
+                                    '</ul>';
+
+                            return {
+                                templateRoot: $compile(template),
+                                templateChild: $compile(template)
+                            }
+                        },
+                        compile: function(element, attrs, childTranscludeFn) {
+                            return function ( scope, element, attrs, treemodelCntr ) {
+
+                                function updateNodeOnRootScope(newValue) {
+                                    if (angular.isArray(newValue)) {
+                                        scope.node = {};
+                                        scope.node[scope.nodeChildren] = newValue;
+                                    }
+                                    else {
+                                        scope.node = newValue;
+                                    }
+                                }
+                                scope.$watch("treeModel", updateNodeOnRootScope);
+                                updateNodeOnRootScope(scope.treeModel);
+
+                                //Rendering template for a root node
+                                treemodelCntr.templateRoot( scope, function(clone) {
+                                    element.html('').append( clone );
+                                });
+                                // save the transclude function from compile (which is not bound to a scope as apposed to the one from link)
+                                // we can fix this to work with the link transclude function with angular 1.2.6. as for angular 1.2.0 we need
+                                // to keep using the compile function
+                                scope.$treeTransclude = childTranscludeFn;
+                            }
+                        }
+                    };
+                }])
+                .directive("treeitem", function() {
+                    return {
+                        restrict: 'E',
+                        require: "^treecontrol",
+                        link: function( scope, element, attrs, treemodelCntr) {
+
+                            // Rendering template for the current node
+                            treemodelCntr.templateChild(scope, function(clone) {
+                                element.html('').append(clone);
+                            });
+                        }
+                    }
+                })
+                .directive("treeTransclude", function() {
+                    return {
+                        link: function(scope, element, attrs, controller) {
+                            scope.$treeTransclude(scope, function(clone) {
+                                element.empty();
+                                element.append(clone);
+                            });
+                        }
+                    }
+                });
+    })( angular );
+
+
+
+
+</script>

@@ -1,0 +1,7 @@
+<div id="head_bar" style="height:30px;background:#f8f8f8;position:fixed;line-height:27px;top:0;z-index:199;font-size:12px;width:1349px;">
+    <a href='' ui-sref="home.headline"><span id='home_btn'  style='padding:10px 5px;color:#a9a9a9;font-weight:bold;margin-left:30px;' ng-click="toHome()">易博客首页</span></a>
+    <span id="login_tip" style="font-size:12px;color:#b0b0b0;">游客，<a href="" ui-sref="home.headline" style="color:#ccc;font-size:12px;text-decoration:underline;">去登录</a></span>
+    <span ng-click="logout()" id="logout_btn" style="float:right;margin-right:30px;padding:1px 5px;"><b style="cursor:pointer;color:#c9cdda;text-decoration:underline;" href="">退出</b></span>
+    <span id="my_set" ui-sref="myHome.mySet({name:&#39;{{name}}&#39;})"  ng-show="set_show" style="color:#b3b3b3;float:right;margin-right:30px;padding:1px 5px;cursor:pointer;">博客中心</span>
+    <span ng-show="not_read" style="width:3px;height:3px;position:relative;left:-32px;top:-7px;float:right;"><img style="width:5px;height:5px;" src="images/not_read.png"/></span><span ng-click="reading()" id="message" ui-sref="myHome.messages({name:&#39;{{name}}&#39;})"  style="float:right;margin-right:30px;padding:1px 5px;cursor:pointer;width:5px;height:8px;margin-top:9px;background:rgba(234, 197, 36, 0.98);"><img style="width:15px;height:12px;margin-left:-5px;margin-top:-21px;" src="images/read.png"/></span>
+</div>
